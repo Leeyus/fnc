@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="fmediaMapper">
+  	<select id="getNum" resultType="java.lang.Integer">
+  		select fmedia_seq.nextval from dual
+  	</select>
+  	<select id="totalCount" parameterType="Pager" resultType="java.lang.Integer">
+  		select count(num) from fmedia where 
+  		<choose>
+  			<when test="kind == 'writer'">
+  				writer
+  			</when>
+  			<when test="kind == 'contents'">
+  				contents
+  			</when>
+  			<otherwise>
+  				subject
+  			</otherwise>
+  		</choose>
+  			like '%'||#{search}||'%'
+  	</select>
+  	<select id="list" parameterType="Pager" resultType="fmediaDTO">
+  		select * from
+  		(select rownum R, P.*from
+  		(select * from fmedia where
+  		<choose>
+  			<when test="kind == 'contents'">
+  				contents
+  			</when>
+  			<when test="kind == 'writer'">
+  				writer
+  			</when>
+  			<otherwise>
+  				subject
+  			</otherwise>
+  		</choose>
+  			like '%'||#{search}||'%' order by num desc) P)
+  			where R between #{startRow} and #{lastRow}
+  	</select>
+  	
+  		<resultMap type="FmediaDTO" id="fmediaResult">
+  		<id property="num" column="num"/>
+  		<result property="sub_img" column="sub_img"/>
+  		<result property="subject" column="subject"/>
+  		<result property="writer" column="writer"/>
+  		<result property="contents" column="contents"/>
+  		<result property="reg_date" column="reg_date"/>
+  		<result property="hit" column="hit"/>
+  		<collection resultMap="fileResult" property="files" javaType="java.util.ArrayList" ofType="FileDTO">
+  			
+  		</collection>
+  	</resultMap>
+  	
+  	<resultMap type="FileDTO" id="fileResult">
+  		<id property="fnum" column="fnum"/>
+  		<result property="num" column="num"/>
+  		<result property="fname" column="fname"/>
+  		<result property="oname" column="oname"/>
+  		<result property="kind" column="kind"/>
+  	</resultMap>
+  	
+  	<select id="select" resultMap="fmediaResult" parameterType="java.lang.Integer">
+  		select p.*,f.fnum,f.fname,f.oname,f.kind
+		from fmedia p left join files f
+		on p.num=f.num and f.kind='p' where p.num=#{num}
+  	</select>
+  	
+  	
+  	
+  	
+  	<insert id="insert" parameterType="FmediaDTO">
+  		insert into fmedia values(#{num},#{sub_img},#{subject},#{writer},#{contents},sysdate,0)
+  	</insert>
+  	
+  	<update id="update" parameterType="FmediaDTO">
+  		update fmedia set subject=#{subject}, contents=#{contents} where num=#{num}
+  	</update>
+  	
+  	<delete id="delete" parameterType="java.lang.Integer">
+  		delete fmedia where num=#{num}
+  	</delete>
+  	
+  
+  
+  </mapper>
+  

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+<configuration>
+	<typeAliases>
+	
+		<typeAlias type="com.iu.member.MemberDTO" alias="MemberDTO"/>
+		<typeAlias type="com.iu.util.Pager" alias="Pager"/>
+		<typeAlias type="com.iu.util.Pager2" alias="Pager2"/>
+		<typeAlias type="com.iu.board.notice.NoticeDTO" alias="NoticeDTO"/>
+		<typeAlias type="com.iu.file.FileDTO" alias="FileDTO"/>
+		<typeAlias type="com.iu.board.fncTalk.FncTalkDTO" alias="FncTalkDTO"/>
+		<typeAlias type="com.iu.board.release.ReleaseDTO" alias="ReleaseDTO"/>
+		<typeAlias type="com.iu.board.actor.ActorDTO" alias="ActorDTO"/>
+		<typeAlias type="com.iu.board.entertainer.EntertainerDTO" alias="EntertainerDTO"/>
+		<typeAlias type="com.iu.board.singer.SingerDTO" alias="SingerDTO"/>
+		<typeAlias type="com.iu.board.auNotice.AuNoticeDTO" alias="AuNoticeDTO"/>
+		<typeAlias type="com.iu.board.fmedia.FmediaDTO" alias="FmediaDTO"/>
+	</typeAliases>
+</configuration>

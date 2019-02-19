@@ -1,0 +1,150 @@
+@charset "UTF-8";
+
+#bbslist thead th{
+	padding: 13px 0;
+	font-weight: bold;
+	font-size: 12px;
+	color: white;
+	background: #252525;
+	text-align: center;
+}
+
+.num{
+	color: #1f1f1f;
+	font-size: 10px;
+}
+
+#bbslist tbody td{
+	padding: 13px 0 17px 0;
+	text-align: center;
+	background: #fff;
+}
+.date{
+	color: #757575;
+	font-size: 10px;
+}
+.hit{
+	color: #1f1f1f;
+	font-size: 10px;
+}
+/* #bbslist .pagenate{
+	margin: 0;
+} */
+.pagenate{
+	position: relative;
+	margin: 10px 0 0 0;
+	padding: 20px 0;
+	text-align: center;
+	background: #fff;
+	border-bottom: 1px solid #e2e2e2;
+}
+.hand{
+	cursor: pointer;
+}
+
+#bbsview thead th{
+	padding: 13px 0;
+	font-weight: bold;
+	font-size: 12px;
+	color: #fff;
+	background: #252525;
+}
+#bbsview tbody td{
+	padding: 13px 0 17px 0;
+	text-align: center;
+	background: #fff;
+	border-bottom: 1px solid #e2e2e2;
+}
+.sbj{
+	
+	font-weight: bold;
+	color: #1f1f1f;
+	padding-left: 40px;
+}
+#bbsview .content{
+	padding: 20px 40px;
+	text-align: left;
+}
+#bbsview .admin_box{
+	margin: 10px 0 8px 0;
+}
+#bbsview .admin_box .btnbox1{
+	float: left;
+}
+#bbsview .admin_box .btnbox2{
+	float: right;
+}
+.basic_btn{
+	display:  inline-block;
+	background: #1c1c1c;
+	font-weight: bold;
+	border: 1px solid #1c1c1c;
+}
+.basic_btn span{
+	display: inline-block;
+	min-width: 78px;
+	padding: 7px 10px;
+	text-align: center;
+	border: 1px solid #555;
+	color: white;
+}
+
+#bbslist .photos{
+	position: relative;
+	overflow: hidden;
+	margin: 0 0 0 -13px;
+}
+#bbslist .photos .photo{
+	width: 218px;
+	margin: 0 0 13px 13px;
+	float: left;
+	background: #fff;
+	border: 1px solid #e7e7e7;
+}
+#bbslist .photos .photo .pt_overview{
+	padding: 20px 18px;
+}
+#bbslist .photos .photo .pt_num{
+	font-size: 20px;
+	font-weight: bold;
+	color: #212121;
+	text-align: left;
+}
+#bbslist .photos .photo .pt_title{
+	margin: 0 0 6px 0;
+}
+#bbslist .photos .photo .pt_title a{
+	display: inline-block;
+	font-weight: bold;
+	font-size: 15px;
+	color: #212121;
+}
+#bbslist .photos .photo .pt_add{
+	font-size: 12px;
+}
+#bbslist .photos .photo .pt_date{
+	margin: 8px 0 0 0;
+	font-size: 10px;
+	color: #5d5d5d;
+}
+#bbslist .photos .photo .pt_pic{
+	width: 218px;
+}
+.pt_pic p{
+	height: 218px;
+}
+
+.pt_pic img{
+	height: 218px;
+}
+
+
+
+
+
+
+
+
+
+
+

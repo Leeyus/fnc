@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="aunoticeMapper">
+  	
+  	<select id="getNum" resultType="java.lang.Integer">
+  		select aunotice_seq.nextval from dual
+  	</select>
+  	<select id="totalCount" parameterType="Pager" resultType="java.lang.Integer">
+  		select count(num) from aunotice where 
+  		<choose>
+  			<when test="kind == 'writer'">
+  				writer
+  			</when>
+  			<when test="kind == 'contents'">
+  				contents
+  			</when>
+  			<otherwise>
+  				subject
+  			</otherwise>
+  		</choose>
+  			like '%'||#{search}||'%'
+  	</select>
+  	
+  	<select id="list" parameterType="Pager" resultType="AuNoticeDTO">
+  		select * from
+  		(select rownum R, U.* from
+  		(select * from aunotice where 
+  		<choose>
+  			<when test="kind == 'contents'">
+  				contents
+  			</when>
+  			<when test="kind == 'writer'">
+  				writer
+  			</when>
+  			<otherwise>
+  				subject
+  			</otherwise>
+  		</choose>
+  		like  '%'||#{search}||'%' order by num desc) U)
+  		where R between #{startRow} and #{lastRow}
+  	</select>
+  	
+  	<resultMap type="AuNoticeDTO" id="aunoticeResult">
+  		<id property="num" column="num"/>
+  		<result property="subject" column="subject"/>
+  		<result property="writer" column="writer"/>
+  		<result property="contents" column="contents"/>
+  		<result property="reg_date" column="reg_date"/>
+  		<result property="hit" column="hit"/>
+  		<collection resultMap="fileResult" property="files" javaType="java.util.ArrayList" ofType="FileDTO">
+  			
+  		</collection>
+  	</resultMap>
+  	
+  	<resultMap type="FileDTO" id="fileResult">
+  		<id property="fnum" column="fnum"/>
+  		<result property="num" column="num"/>
+  		<result property="fname" column="fname"/>
+  		<result property="oname" column="oname"/>
+  		<result property="kind" column="kind"/>
+  	</resultMap>
+  	
+  	<select id="select" resultMap="aunoticeResult" parameterType="java.lang.Integer">
+  		select u.*,f.fnum,f.fname,f.oname,f.kind
+		from aunotice u left join files f
+		on u.num=f.num and f.kind='u' where u.num=#{num}
+  	</select>
+  	<insert id="insert" parameterType="AuNoticeDTO">
+  		insert into aunotice values(#{num}, #{subject}, #{writer},#{contents},sysdate,0)
+  	</insert>
+  	<update id="update" parameterType="AuNoticeDTO">
+  		update aunotice set subject=#{subject}, contents=#{contents} where num=#{num}
+  	</update>
+  	<delete id="delete" parameterType="java.lang.Integer">
+  		delete aunotice where num=#{num}
+  	</delete>
+  	
+  
+  </mapper>

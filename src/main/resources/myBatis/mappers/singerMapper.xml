@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="singerMapper">
+  	<select id="getNum" resultType="java.lang.Integer">
+  		select singer_seq.nextval from dual
+  	</select>
+  	<select id="totalCount" parameterType="Pager2" resultType="java.lang.Integer">
+  		select count(num) from singer where 
+  		<choose>
+  			<when test="kind == 'writer'">
+  				writer
+  			</when>
+  			<when test="kind == 'contents'">
+  				contents
+  			</when>
+  			<otherwise>
+  				subject
+  			</otherwise>
+  		</choose>
+  			like '%'||#{search}||'%'
+  	</select>
+  	<select id="list" parameterType="Pager2" resultType="SingerDTO">
+  		select * from
+  		(select rownum R, S.*from
+  		(select * from singer where
+  		<choose>
+  			<when test="kind == 'contents'">
+  				contents
+  			</when>
+  			<when test="kind == 'writer'">
+  				writer
+  			</when>
+  			<otherwise>
+  				subject
+  			</otherwise>
+  		</choose>
+  			like '%'||#{search}||'%' order by num desc) S)
+  			where R between #{startRow} and #{lastRow}
+  	</select>
+  	
+  		<resultMap type="SingerDTO" id="singerResult">
+  		<id property="num" column="num"/>
+  		<result property="sub_img" column="sub_img"/>
+  		<result property="subject" column="subject"/>
+  		<result property="writer" column="writer"/>
+  		<result property="main_img" column="main_img"/>
+  		<result property="contents" column="contents"/>
+  		<result property="sub_contents" column="sub_contents"/>
+  		<result property="reg_date" column="reg_date"/>
+  		<result property="hit" column="hit"/>
+  		<collection resultMap="fileResult" property="files" javaType="java.util.ArrayList" ofType="FileDTO">
+  			
+  		</collection>
+  	</resultMap>
+  	
+  	<resultMap type="FileDTO" id="fileResult">
+  		<id property="fnum" column="fnum"/>
+  		<result property="num" column="num"/>
+  		<result property="fname" column="fname"/>
+  		<result property="oname" column="oname"/>
+  		<result property="kind" column="kind"/>
+  	</resultMap>
+  	
+  	<select id="select" resultMap="singerResult" parameterType="java.lang.Integer">
+  		select s.*,f.fnum,f.fname,f.oname,f.kind
+		from singer s left join files f
+		on s.num=f.num and f.kind='s' where s.num=#{num}
+  	</select>
+  	
+  	
+  	
+  	
+  	<insert id="insert" parameterType="SingerDTO">
+  		insert into singer values(#{num},#{sub_img},#{subject},#{writer},#{main_img},#{contents},#{sub_contents},sysdate,0)
+  	</insert>
+  	
+  	<update id="update" parameterType="SingerDTO">
+  		update singer set subject=#{subject}, contents=#{contents}, sub_contents=#{sub_contents} where num=#{num}
+  	</update>
+  	
+  	<delete id="delete" parameterType="java.lang.Integer">
+  		delete singer where num=#{num}
+  	</delete>
+  	
+  
+  
+  </mapper>
+  

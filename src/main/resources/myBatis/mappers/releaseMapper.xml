@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="releaseMapper">
+  	<select id="getNum" resultType="java.lang.Integer">
+  		select release_seq.nextval from dual
+  	</select>
+  	<select id="totalCount" parameterType="Pager" resultType="java.lang.Integer">
+  		select count(num) from release where 
+  		<choose>
+  			<when test="kind == 'writer'">
+  				writer
+  			</when>
+  			<when test="kind == 'contents'">
+  				contents
+  			</when>
+  			<otherwise>
+  				subject
+  			</otherwise>
+  		</choose>
+  			like '%'||#{search}||'%'
+  	</select>
+  	<select id="list" parameterType="Pager" resultType="ReleaseDTO">
+  		select * from
+  		(select rownum R, E.*from
+  		(select * from release where
+  		<choose>
+  			<when test="kind == 'contents'">
+  				contents
+  			</when>
+  			<when test="kind == 'writer'">
+  				writer
+  			</when>
+  			<otherwise>
+  				subject
+  			</otherwise>
+  		</choose>
+  			like '%'||#{search}||'%' order by num desc) E)
+  			where R between #{startRow} and #{lastRow}
+  	</select>
+  	
+  		<resultMap type="ReleaseDTO" id="releaseResult">
+  		<id property="num" column="num"/>
+  		<result property="sub_img" column="sub_img"/>
+  		<result property="subject" column="subject"/>
+  		<result property="writer" column="writer"/>
+  		<result property="contents" column="contents"/>
+  		<result property="reg_date" column="reg_date"/>
+  		<result property="hit" column="hit"/>
+  		<collection resultMap="fileResult" property="files" javaType="java.util.ArrayList" ofType="FileDTO">
+  			
+  		</collection>
+  	</resultMap>
+  	
+  	<resultMap type="FileDTO" id="fileResult">
+  		<id property="fnum" column="fnum"/>
+  		<result property="num" column="num"/>
+  		<result property="fname" column="fname"/>
+  		<result property="oname" column="oname"/>
+  		<result property="kind" column="kind"/>
+  	</resultMap>
+  	
+  	<select id="select" resultMap="releaseResult" parameterType="java.lang.Integer">
+  		select r.*,f.fnum,f.fname,f.oname,f.kind
+		from release r left join files f
+		on r.num=f.num and f.kind='r' where r.num=#{num}
+  	</select>
+  	
+  	
+  	
+  	
+  	<insert id="insert" parameterType="ReleaseDTO">
+  		insert into release values(#{num},#{sub_img},#{subject},#{writer},#{contents},sysdate,0)
+  	</insert>
+  	
+  	<update id="update" parameterType="ReleaseDTO">
+  		update release set subject=#{subject}, contents=#{contents} where num=#{num}
+  	</update>
+  	
+  	<delete id="delete" parameterType="java.lang.Integer">
+  		delete release where num=#{num}
+  	</delete>
+  	
+  
+  
+  </mapper>
+  

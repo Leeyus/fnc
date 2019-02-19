@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+.actor_list{
+	margin: 0 0 0 -24px;
+}
+
+.actor_list > li{
+	float: left;
+	width: 212px;
+	margin: 0 0 38px 24px;
+}
+.actor_list .pic{
+	height: 217px;
+	overflow: hidden;
+	background: #fff;
+}
+
+.actor_list .add{
+	padding: 18px;
+	background: #fff;
+	border-bottom: 1px solid #e2e2e2;
+	overflow: hidden;
+}
+.actor_list .add_tit{
+	float: left;
+	color: #363636;
+	font-size: 14px;
+	font-weight: bold;
+	overflow: hidden;
+	display: inline-block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+#mini_cont{
+	margin: 10px 0 0 0;
+	padding: 45px 55px;
+	background: #fff;
+	border-bottom: 1px solid #e2e2e2;
+}
+#mini_cont:first-child{
+	margin: 0;
+}
+.actors{
+	border-top: 3px solid #1f1f1f;
+}
+#actor_box{
+	width: 680px;
+}
+.mini_title{
+	color: #1f1f1f;
+	font-weight: bold;
+	font-size: 25px;
+	text-align: left;
+	margin: 0 0 12px 0;	
+}
+#test p{
+	padding-bottom: 20px;
+}
+
+#filmography{
+	margin: 10px 0 0 0;
+	padding: 45px 55px;
+	background: #fff;
+	border-bottom: 1px solid #e2e2e2;
+	overflow: hidden;
+}
+
+#filmography h4{
+	float: left;
+	color: #1f1f1f;
+	font-weight: bold;
+	font-size: 17px;
+}
+
+/* -----------------------------------------  */
+
+
+.singer_list {
+	margin: 0 0 0 -26px;
+}
+.singer_list > li{
+	float: left;
+	width: 447px;
+	margin: 0 0 30px 26px;
+}
+.singer_list .pic{
+	height: 190px;
+	overflow: hidden;
+	background: #fff;
+}
+.singer_list .add{
+	padding: 19px 24px 18px 24px;
+	background: #fff;
+	border-bottom: 1px solid #e2e2e2;
+	overflow: hidden;
+}
+.singer_list .add_tit{
+	float: left;
+	color: #363636;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#mini_cont{
+	margin: 10px 0 0 0;
+	padding: 45px 55px;
+	background: #fff;
+	border-bottom: 1px solid #e2e2e2;
+}
+#singer_tit{
+	color: #1f1f1f;
+	font-weight: bold;
+	font-size: 25px;
+}
+.section{
+	position: relative;
+	margin: 40px 0 0;
+}
+.sub_cont{
+	padding: 45px 55px;
+	background: #fff;
+	border-bottom: 1px solid #e2e2e2;
+}
+
+#contents2 h4{
+	color: #f1f1f1;
+	font-weight: bold;
+	font-size: 16px;
+	margin: 0 0 22px 0;
+}
+.singer_wrap{
+	overflow: hidden;
+}
+.singer_wrap td{
+	font-size: 12px;
+}
+
+
+
+

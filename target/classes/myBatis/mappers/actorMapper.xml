@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="actorMapper">
+  	<select id="getNum" resultType="java.lang.Integer">
+  		select actor_seq.nextval from dual
+  	</select>
+  	<select id="totalCount" parameterType="Pager" resultType="java.lang.Integer">
+  		select count(num) from actor where 
+  		<choose>
+  			<when test="kind == 'writer'">
+  				writer
+  			</when>
+  			<when test="kind == 'contents'">
+  				contents
+  			</when>
+  			<otherwise>
+  				subject
+  			</otherwise>
+  		</choose>
+  			like '%'||#{search}||'%'
+  	</select>
+  	<select id="list" parameterType="Pager" resultType="ActorDTO">
+  		select * from
+  		(select rownum R, A.*from
+  		(select * from actor where
+  		<choose>
+  			<when test="kind == 'contents'">
+  				contents
+  			</when>
+  			<when test="kind == 'writer'">
+  				writer
+  			</when>
+  			<otherwise>
+  				subject
+  			</otherwise>
+  		</choose>
+  			like '%'||#{search}||'%' order by num desc) A)
+  			where R between #{startRow} and #{lastRow}
+  	</select>
+  	
+ 	<resultMap type="ActorDTO" id="actorResult">
+  		<id property="num" column="num"/>
+  		<result property="sub_img" column="sub_img"/>
+  		<result property="subject" column="subject"/>
+  		<result property="writer" column="writer"/>
+  		<result property="contents" column="contents"/>
+  		<result property="reg_date" column="reg_date"/>
+  		<result property="hit" column="hit"/>
+  		<result property="sub_contents" column="sub_contents"/>
+  		<collection resultMap="fileResult" property="files" javaType="java.util.ArrayList" ofType="FileDTO">
+  			
+  		</collection>
+  	</resultMap>
+  	
+  	<resultMap type="FileDTO" id="fileResult">
+  		<id property="fnum" column="fnum"/>
+  		<result property="num" column="num"/>
+  		<result property="fname" column="fname"/>
+  		<result property="oname" column="oname"/>
+  		<result property="kind" column="kind"/>
+  	</resultMap>
+  	
+  	<select id="select" resultMap="actorResult" parameterType="java.lang.Integer">
+  		select a.*,f.fnum,f.fname,f.oname,f.kind
+		from actor a left join files f
+		on a.num=f.num and f.kind='a' where a.num=#{num}
+  	</select>
+  	
+  	
+  	
+  	
+  	<insert id="insert" parameterType="ActorDTO">
+  		insert into actor values(#{num},#{sub_img},#{subject},#{writer},#{contents},sysdate,0,#{sub_contents})
+  	</insert>
+  	
+  	<update id="update" parameterType="ActorDTO">
+  		update actor set subject=#{subject}, sub_img=#{sub_img},contents=#{contents},sub_contents=#{sub_contents} where num=#{num}
+  	</update>
+  	
+  	<delete id="delete" parameterType="java.lang.Integer">
+  		delete actor where num=#{num}
+  	</delete>
+  	
+  
+  
+  </mapper>
+  
