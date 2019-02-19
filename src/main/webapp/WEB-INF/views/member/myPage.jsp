@@ -75,6 +75,7 @@ $(function() {
 			<div id="pages_join">
 				<div class="tab_section">
 					<h3>내 정보</h3>
+					
 				</div>
 				<form action="./myPage" name="frm" method="post" id="frm">
 			<!-- <input type="hidden" name="kind" > -->
